@@ -14,11 +14,19 @@ library(tidyr)
 getwd()
 dir()
 
-#loading in last year's census data 
-last.year.census <- read_excel("C:/Users/jrgremer/Box/Gremer Lab/Streptanthus project/Demography/Wrights Lake_Carson Pass/Annual Census - WL & CP/Annual Census 2024/WL2_annualcensus_2024_verified.xlsx")
+#load in last year's census data 
+#navigate to the correct box folder
+last.year.census <- read_excel("C:/Users/jrgremer/Box/Gremer Lab/Streptanthus project/Demography/Wrights Lake_Carson Pass/Annual Census - WL & CP/Annual Census 2025/WL2_annualcensus_20250731.xlsx")
 summary(last.year.census)
 head(last.year.census)
 dim(last.year.census)
+
+#note, in 2025 the column headers were capitalized in the datasheet entry and some column names were changed, in future let's be consistent about that.  
+#the following is not needed if column names are not capitalized and names are same as before
+last.year.census = last.year.census %>%
+                   mutate(transect_plot = Transect_plot, quad = Quad, band_color = Band_color, band_num = Band_num,
+                          X= Xcoord, Y= Ycoord, pheno = Phenology) 
+
 #filtering datframe to only plants that were banded last year 
 #some may not have X and Y coordinates, particularly at TM2 and BH, where we did extra sampling off the transects/plots 
 last.year.censuspt1 = filter(last.year.census, band_color != "NA")
@@ -53,7 +61,7 @@ fatesdatasheet = last.year.censuspt2 %>%
                               quad) 
 
 #write dataframe to csv file
-write.csv(fatesdatasheet,"C:/Users/jrgremer/Box/Gremer Lab/Streptanthus project/Demography/Blank demog datasheets/Annual census data sheets/WL2_annualcensus_2025_prefilled_notformatted.csv", row.names = FALSE)
+write.csv(fatesdatasheet,"C:/Users/jrgremer/Box/Gremer Lab/Streptanthus project/Demography/Blank demog datasheets/Annual census data sheets/WL2_annualcensus_2026_prefilled_notformatted.csv", row.names = FALSE)
 
 
 #NOTE: will create these datasheets, but we may only use them for 202, 203, and 204 (or not at all)
@@ -70,5 +78,5 @@ newdatasheet = rbind.data.frame(trans1, trans2, trans3, trans4) %>%
                arrange(transect, quad)
               
 
-write.csv(newdatasheet,"C:/Users/jrgremer/Box/Gremer Lab/Streptanthus project/Demography/Blank demog datasheets/Annual census data sheets/WL2_annualcensus_2025_quadlevel_notformatted.csv", row.names = FALSE)
+write.csv(newdatasheet,"C:/Users/jrgremer/Box/Gremer Lab/Streptanthus project/Demography/Blank demog datasheets/Annual census data sheets/WL2_annualcensus_2026_quadlevel_notformatted.csv", row.names = FALSE)
 
